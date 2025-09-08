@@ -69,18 +69,66 @@ const dummyPosts = [
   {
     id: "5",
     author: {
+      name: "Priya Sharma",
+      username: "wandering_desi",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face"
+    },
+    location: "Jaipur, Rajasthan, India",
+    image: "https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=600&h=600&fit=crop",
+    caption: "The Pink City never fails to amaze! Exploring the majestic Hawa Mahal and getting lost in the vibrant bazaars of Jaipur 🏰✨",
+    likes: 3456,
+    comments: 278,
+    isLiked: false,
+    tags: ["jaipur", "rajasthan", "heritage", "india", "architecture"],
+    timeAgo: "1d"
+  },
+  {
+    id: "6",
+    author: {
+      name: "Arjun Patel",
+      username: "spice_trail",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+    },
+    location: "Kerala Backwaters, India",
+    image: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=600&h=600&fit=crop",
+    caption: "Floating through paradise in the Kerala backwaters! The traditional houseboat experience with authentic Malayalam cuisine was incredible 🛶",
+    likes: 2189,
+    comments: 156,
+    isLiked: true,
+    tags: ["kerala", "backwaters", "houseboat", "india", "nature"],
+    timeAgo: "2d"
+  },
+  {
+    id: "7",
+    author: {
       name: "Lisa Park",
       username: "beach_wanderer",
       avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
     },
-    location: "Maldives",
-    image: "https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?w=600&h=600&fit=crop",
-    caption: "Crystal clear waters and overwater bungalows - living the dream in paradise! Already missing this slice of heaven 🏝️",
-    likes: 5623,
-    comments: 445,
+    location: "Goa, India",
+    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=600&h=600&fit=crop",
+    caption: "Beach vibes and Portuguese architecture in beautiful Goa! The sunset at Anjuna Beach with some fresh seafood curry 🌅🦐",
+    likes: 4234,
+    comments: 234,
     isLiked: true,
-    tags: ["maldives", "paradise", "beach", "overwater", "tropical"],
-    timeAgo: "2d"
+    tags: ["goa", "beach", "sunset", "seafood", "india"],
+    timeAgo: "3d"
+  },
+  {
+    id: "8",
+    author: {
+      name: "Rohan Singh",
+      username: "mountain_wanderer",
+      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+    },
+    location: "Leh Ladakh, India",
+    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=600&h=600&fit=crop",
+    caption: "The land of high passes! Riding through the breathtaking landscapes of Ladakh on my Royal Enfield. Every turn reveals a new wonder 🏔️🏍️",
+    likes: 5789,
+    comments: 445,
+    isLiked: false,
+    tags: ["ladakh", "biketrip", "mountains", "india", "adventure"],
+    timeAgo: "4d"
   }
 ];
 

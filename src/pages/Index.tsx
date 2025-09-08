@@ -34,8 +34,10 @@ const currentUser = {
 // Dummy travel groups data
 const travelGroups = [
   { name: "Solo Travelers", members: "12.5K", icon: "👤", color: "bg-ocean" },
+  { name: "Indian Heritage", members: "6.8K", icon: "🏛️", color: "bg-sunset" },
   { name: "Mountain Hikers", members: "8.3K", icon: "⛰️", color: "bg-nature" },
   { name: "Food Explorers", members: "15.7K", icon: "🍜", color: "bg-sunset" },
+  { name: "Spiritual Journey", members: "4.2K", icon: "🕉️", color: "bg-nature" },
   { name: "Photography", members: "9.1K", icon: "📸", color: "bg-ocean" },
   { name: "Beach Lovers", members: "11.2K", icon: "🏖️", color: "bg-sky" }
 ];
@@ -86,7 +88,7 @@ const Index = () => {
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-foreground mb-6">Explore Destinations</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {["Paris, France", "Tokyo, Japan", "New York, USA", "Bali, Indonesia", "London, UK", "Rome, Italy"].map((destination) => (
+              {["Jaipur, India", "Kerala, India", "Tokyo, Japan", "Goa, India", "Paris, France", "Ladakh, India", "New York, USA", "Bali, Indonesia", "Mumbai, India"].map((destination) => (
                 <Card key={destination} className="p-4 text-center hover:shadow-card-travel transition-shadow">
                   <Globe className="w-8 h-8 mx-auto mb-2 text-ocean" />
                   <p className="font-medium text-sm">{destination}</p>
