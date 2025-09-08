@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { TravelFeed } from "@/components/TravelFeed";
+import { TravelReels } from "@/components/TravelReels";
 import { UserProfile } from "@/components/UserProfile";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -95,6 +96,14 @@ const Index = () => {
                 </Card>
               ))}
             </div>
+          </div>
+        );
+      
+      case "reels":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold text-foreground mb-6">Travel Reels</h2>
+            <TravelReels />
           </div>
         );
       

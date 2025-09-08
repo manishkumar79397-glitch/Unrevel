@@ -1,4 +1,4 @@
-import { Home, Search, PlusSquare, Heart, User, Map, Users } from "lucide-react";
+import { Home, Search, PlusSquare, Heart, User, Map, Users, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
@@ -11,6 +11,7 @@ interface NavigationProps {
 const navItems = [
   { id: 'home', icon: Home, label: 'Home' },
   { id: 'explore', icon: Search, label: 'Explore' },
+  { id: 'reels', icon: Play, label: 'Travel Reels' },
   { id: 'map', icon: Map, label: 'Map' },
   { id: 'post', icon: PlusSquare, label: 'Post' },
   { id: 'groups', icon: Users, label: 'Groups' },
