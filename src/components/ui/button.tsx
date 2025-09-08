@@ -15,6 +15,12 @@ const buttonVariants = cva(
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Travel-themed variants
+        ocean: "bg-gradient-ocean text-white shadow-button-travel hover:shadow-travel transform hover:scale-105 transition-all duration-200",
+        nature: "bg-gradient-nature text-white shadow-button-travel hover:shadow-travel transform hover:scale-105 transition-all duration-200",
+        hero: "bg-gradient-hero text-white shadow-button-travel hover:shadow-travel transform hover:scale-105 transition-all duration-200",
+        "ocean-outline": "border-2 border-ocean bg-transparent text-ocean hover:bg-ocean hover:text-white",
+        "nature-outline": "border-2 border-nature bg-transparent text-nature hover:bg-nature hover:text-white",
       },
       size: {
         default: "h-10 px-4 py-2",
