@@ -2,6 +2,7 @@ import { Heart, MessageCircle, Share2, Play, Pause } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
+import { useTravelReels } from "@/hooks/useTravelData";
 
 interface ReelData {
   id: string;
@@ -72,7 +73,7 @@ const dummyReels: ReelData[] = [
 ];
 
 interface ReelProps {
-  reel: ReelData;
+  reel: ReelData | any;
   isVisible: boolean;
 }
 
@@ -83,7 +84,7 @@ function Reel({ reel, isVisible }: ReelProps) {
     <div className="relative w-full h-[80vh] bg-black rounded-2xl overflow-hidden snap-start">
       {/* Background Video/Image */}
       <img
-        src={reel.videoThumbnail}
+        src={reel.thumbnail_url || reel.videoThumbnail}
         alt="Travel reel"
         className="w-full h-full object-cover"
       />
@@ -113,20 +114,20 @@ function Reel({ reel, isVisible }: ReelProps) {
             {/* User info */}
             <div className="flex items-center space-x-3">
               <Avatar className="w-12 h-12 ring-2 ring-white/50">
-                <AvatarImage src={reel.author.avatar} alt={reel.author.name} />
-                <AvatarFallback>{reel.author.name.charAt(0)}</AvatarFallback>
+                <AvatarImage src={reel.profiles?.avatar_url || reel.author?.avatar || "/placeholder.svg"} alt={reel.profiles?.display_name || reel.author?.name || "User"} />
+                <AvatarFallback>{(reel.profiles?.display_name || reel.author?.name || "T").charAt(0)}</AvatarFallback>
               </Avatar>
               <div>
-                <p className="font-semibold text-white text-sm">{reel.author.username}</p>
+                <p className="font-semibold text-white text-sm">{reel.profiles?.username || reel.author?.username || "traveler"}</p>
                 <p className="text-white/80 text-xs">{reel.location}</p>
               </div>
             </div>
 
             {/* Caption */}
             <div className="space-y-2">
-              <p className="text-white text-sm leading-relaxed">{reel.caption}</p>
+              <p className="text-white text-sm leading-relaxed">{reel.title || reel.caption}</p>
               <div className="flex flex-wrap gap-1">
-                {reel.tags.map((tag, index) => (
+                {(reel.tags || []).map((tag: string, index: number) => (
                   <span key={index} className="text-white/90 text-xs">
                     #{tag}
                   </span>
@@ -148,7 +149,7 @@ function Reel({ reel, isVisible }: ReelProps) {
               <Heart className={`w-6 h-6 ${reel.isLiked ? "fill-current" : ""}`} />
             </Button>
             <span className="text-white text-xs font-medium">
-              {reel.likes > 1000 ? `${(reel.likes / 1000).toFixed(1)}K` : reel.likes}
+              {((reel.likes_count || reel.likes) > 1000) ? `${((reel.likes_count || reel.likes) / 1000).toFixed(1)}K` : (reel.likes_count || reel.likes)}
             </span>
           </div>
 
@@ -162,7 +163,7 @@ function Reel({ reel, isVisible }: ReelProps) {
               <MessageCircle className="w-6 h-6" />
             </Button>
             <span className="text-white text-xs font-medium">
-              {reel.comments > 1000 ? `${(reel.comments / 1000).toFixed(1)}K` : reel.comments}
+              {((reel.views_count || reel.comments) > 1000) ? `${((reel.views_count || reel.comments) / 1000).toFixed(1)}K` : (reel.views_count || reel.comments)}
             </span>
           </div>
 
@@ -176,7 +177,7 @@ function Reel({ reel, isVisible }: ReelProps) {
               <Share2 className="w-6 h-6" />
             </Button>
             <span className="text-white text-xs font-medium">
-              {reel.shares > 1000 ? `${(reel.shares / 1000).toFixed(1)}K` : reel.shares}
+              {((reel.shares || 0) > 1000) ? `${(reel.shares / 1000).toFixed(1)}K` : (reel.shares || 0)}
             </span>
           </div>
         </div>
@@ -186,9 +187,17 @@ function Reel({ reel, isVisible }: ReelProps) {
 }
 
 export function TravelReels() {
+  const { data: reels = [], isLoading } = useTravelReels();
+
+  if (isLoading) {
+    return <div className="text-center py-8">Loading reels...</div>;
+  }
+
+  const displayReels = reels.length > 0 ? reels : dummyReels;
+
   return (
     <div className="h-[80vh] overflow-y-scroll snap-y snap-mandatory scrollbar-hide space-y-4">
-      {dummyReels.map((reel, index) => (
+      {displayReels.map((reel, index) => (
         <Reel 
           key={reel.id} 
           reel={reel} 

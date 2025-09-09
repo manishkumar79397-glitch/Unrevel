@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { TravelFeed } from "@/components/TravelFeed";
 import { TravelReels } from "@/components/TravelReels";
@@ -14,8 +15,11 @@ import {
   Plane,
   Mountain,
   Globe,
-  Heart
+  Heart,
+  LogOut
 } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
+import { useUserProfile } from "@/hooks/useTravelData";
 import heroImage from "@/assets/travel-hero.jpg";
 
 // Dummy user data
@@ -45,6 +49,16 @@ const travelGroups = [
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
+  const { user, loading, signOut } = useAuth();
+  const { data: userProfile } = useUserProfile();
+
+  // Redirect to auth if not logged in
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <Navigate to="/auth" />;
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -180,8 +194,31 @@ const Index = () => {
           </div>
         );
       
-      case "profile":
-        return <UserProfile user={currentUser} />;
+        case "profile":
+          return (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">Profile</h2>
+                <Button onClick={handleSignOut} variant="outline" size="sm">
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Sign Out
+                </Button>
+              </div>
+              {userProfile && <UserProfile user={{
+                name: userProfile.display_name || "Traveler",
+                username: userProfile.username || "traveler",
+                avatar: userProfile.avatar_url || "/placeholder.svg",
+                bio: userProfile.bio || "Travel enthusiast sharing amazing experiences",
+                location: userProfile.location || "Exploring the world",
+                followers: userProfile.followers_count,
+                following: userProfile.following_count,
+                posts: userProfile.posts_count,
+                interests: userProfile.interests || [],
+                isOwnProfile: true,
+                isFollowing: false
+              }} />}
+            </div>
+          );
       
       default:
         return <TravelFeed />;
