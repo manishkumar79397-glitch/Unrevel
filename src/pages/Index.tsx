@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { TravelFeed } from "@/components/TravelFeed";
 import { TravelReels } from "@/components/TravelReels";
@@ -51,10 +51,10 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
   const { user, loading, signOut } = useAuth();
   const { data: userProfile } = useUserProfile();
+  const navigate = useNavigate();
 
-  // Redirect to auth if not logged in
+  // Show loading state
   if (loading) return <div>Loading...</div>;
-  if (!user) return <Navigate to="/auth" />;
 
   const handleSignOut = async () => {
     await signOut();
@@ -81,7 +81,12 @@ const Index = () => {
                   Connect with fellow travelers and discover amazing destinations
                 </p>
                 <div className="flex space-x-3 mt-4">
-                  <Button variant="hero" size="lg" className="animate-bounce-gentle">
+                  <Button 
+                    variant="hero" 
+                    size="lg" 
+                    className="animate-bounce-gentle"
+                    onClick={() => user ? setActiveTab('post') : navigate('/auth')}
+                  >
                     <Camera className="w-5 h-5 mr-2" />
                     Share Your Story
                   </Button>

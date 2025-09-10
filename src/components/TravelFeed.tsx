@@ -4,14 +4,23 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Heart, MessageCircle, Share, MapPin } from "lucide-react";
 import { useTravelPosts, useLikePost } from "@/hooks/useTravelData";
+import { useAuth } from "@/hooks/useAuth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TravelFeed = () => {
   const { data: posts = [], isLoading } = useTravelPosts();
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const likeMutation = useLikePost();
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
 
   const handleLike = (postId: string) => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    
     const isLiked = likedPosts.has(postId);
     setLikedPosts(prev => {
       const newSet = new Set(prev);
