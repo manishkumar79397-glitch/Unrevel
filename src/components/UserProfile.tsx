@@ -60,7 +60,7 @@ export function UserProfile({ user }: UserProfileProps) {
                     <Users className="w-4 h-4 mr-2" />
                     {user.isFollowing ? 'Following' : 'Follow'}
                   </Button>
-                  <Button variant="nature-outline" size="sm">
+                  <Button variant="ocean-outline" size="sm">
                     Message
                   </Button>
                 </>

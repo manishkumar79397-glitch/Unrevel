@@ -64,36 +64,43 @@ const Index = () => {
     switch (activeTab) {
       case "home":
         return (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Hero Section - Only on Home */}
-            <div className="relative h-64 lg:h-80 rounded-2xl overflow-hidden shadow-travel mb-8">
+            <div className="relative h-72 lg:h-96 rounded-3xl overflow-hidden shadow-xl mb-12 animate-fade-in">
               <img
                 src={heroImage}
                 alt="Travel the world"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 text-white">
-                <h1 className="text-3xl lg:text-4xl font-bold mb-2 animate-fade-in">
-                  Share Your Adventures
-                </h1>
-                <p className="text-lg opacity-90 animate-slide-up">
-                  Connect with fellow travelers and discover amazing destinations
-                </p>
-                <div className="flex space-x-3 mt-4">
-                  <Button 
-                    variant="hero" 
-                    size="lg" 
-                    className="animate-bounce-gentle"
-                    onClick={() => user ? setActiveTab('post') : navigate('/auth')}
-                  >
-                    <Camera className="w-5 h-5 mr-2" />
-                    Share Your Story
-                  </Button>
-                  <Button variant="ocean-outline" size="lg" className="bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white">
-                    <Compass className="w-5 h-5 mr-2" />
-                    Explore
-                  </Button>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute inset-0 flex items-end">
+                <div className="p-8 lg:p-12 text-white max-w-3xl">
+                  <h1 className="text-3xl lg:text-5xl font-bold mb-4 animate-fade-in leading-tight">
+                    Share Your Adventures
+                  </h1>
+                  <p className="text-lg lg:text-xl opacity-90 animate-slide-up mb-6 leading-relaxed">
+                    Connect with fellow travelers and discover amazing destinations around the world
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button 
+                      variant="hero" 
+                      size="lg" 
+                      className="animate-bounce-gentle text-base px-8 py-4 h-auto"
+                      onClick={() => user ? setActiveTab('post') : navigate('/auth')}
+                    >
+                      <Camera className="w-5 h-5 mr-3" />
+                      Share Your Story
+                    </Button>
+                    <Button 
+                      variant="ocean-outline" 
+                      size="lg" 
+                      className="bg-white/10 backdrop-blur-sm border-white/30 text-white hover:bg-white hover:text-primary text-base px-8 py-4 h-auto"
+                      onClick={() => setActiveTab('explore')}
+                    >
+                      <Compass className="w-5 h-5 mr-3" />
+                      Explore Places
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -105,13 +112,19 @@ const Index = () => {
       
       case "explore":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Explore Destinations</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-              {["Jaipur, India", "Kerala, India", "Tokyo, Japan", "Goa, India", "Paris, France", "Ladakh, India", "New York, USA", "Bali, Indonesia", "Mumbai, India"].map((destination) => (
-                <Card key={destination} className="p-4 text-center hover:shadow-card-travel transition-shadow">
-                  <Globe className="w-8 h-8 mx-auto mb-2 text-ocean" />
-                  <p className="font-medium text-sm">{destination}</p>
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">Explore Destinations</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Discover amazing places around the world and plan your next adventure</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {["Jaipur, India", "Kerala, India", "Tokyo, Japan", "Goa, India", "Paris, France", "Ladakh, India", "New York, USA", "Bali, Indonesia", "Mumbai, India", "Barcelona, Spain", "Santorini, Greece", "Dubai, UAE"].map((destination, index) => (
+                <Card key={destination} className="group p-6 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-ocean rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Globe className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-2">{destination}</h3>
+                  <p className="text-sm text-muted-foreground">Explore this destination</p>
                 </Card>
               ))}
             </div>
@@ -143,22 +156,25 @@ const Index = () => {
       
       case "groups":
         return (
-          <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Travel Communities</h2>
-            <div className="space-y-4">
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">Travel Communities</h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Join like-minded travelers and share experiences with communities that match your interests</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {travelGroups.map((group, index) => (
-                <Card key={group.name} className="p-4 hover:shadow-card-travel transition-shadow animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
+                <Card key={group.name} className="p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 animate-slide-up" style={{ animationDelay: `${index * 100}ms` }}>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-12 h-12 ${group.color} rounded-full flex items-center justify-center text-xl`}>
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-16 h-16 ${group.color} rounded-2xl flex items-center justify-center text-2xl shadow-lg`}>
                         {group.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground">{group.name}</h3>
-                        <p className="text-sm text-muted-foreground">{group.members} members</p>
+                        <h3 className="font-bold text-lg text-foreground mb-1">{group.name}</h3>
+                        <p className="text-muted-foreground">{group.members} members</p>
                       </div>
                     </div>
-                    <Button variant="ocean-outline" size="sm">
+                    <Button variant="ocean" size="lg" className="px-6">
                       <Users className="w-4 h-4 mr-2" />
                       Join
                     </Button>
@@ -239,8 +255,8 @@ const Index = () => {
       />
       
       {/* Main Content */}
-      <main className="lg:ml-64 px-4 py-6 lg:px-8">
-        <div className="max-w-2xl mx-auto">
+      <main className="lg:ml-80 p-4 lg:p-8 pb-20 lg:pb-8">
+        <div className="max-w-4xl mx-auto">
           {renderContent()}
         </div>
       </main>
