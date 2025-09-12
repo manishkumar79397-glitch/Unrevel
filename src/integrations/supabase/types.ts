@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      comments: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          post_id: string | null
+          reel_id: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          post_id?: string | null
+          reel_id?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          post_id?: string | null
+          reel_id?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       follows: {
         Row: {
           created_at: string
@@ -74,6 +104,72 @@ export type Database = {
           },
         ]
       }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          read: boolean | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          read?: boolean | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          read?: boolean | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          action_user_id: string | null
+          created_at: string
+          id: string
+          message: string
+          post_id: string | null
+          read: boolean | null
+          reel_id: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          action_user_id?: string | null
+          created_at?: string
+          id?: string
+          message: string
+          post_id?: string | null
+          read?: boolean | null
+          reel_id?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          action_user_id?: string | null
+          created_at?: string
+          id?: string
+          message?: string
+          post_id?: string | null
+          read?: boolean | null
+          reel_id?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -119,6 +215,39 @@ export type Database = {
           updated_at?: string
           user_id?: string
           username?: string | null
+        }
+        Relationships: []
+      }
+      stories: {
+        Row: {
+          caption: string | null
+          content_type: string
+          content_url: string
+          created_at: string
+          expires_at: string
+          id: string
+          user_id: string
+          views_count: number | null
+        }
+        Insert: {
+          caption?: string | null
+          content_type: string
+          content_url: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          user_id: string
+          views_count?: number | null
+        }
+        Update: {
+          caption?: string | null
+          content_type?: string
+          content_url?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          user_id?: string
+          views_count?: number | null
         }
         Relationships: []
       }
@@ -205,7 +334,14 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      conversations: {
+        Row: {
+          last_message_at: string | null
+          other_user_id: string | null
+          unread_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
