@@ -260,6 +260,8 @@ export type Database = {
           image_url: string | null
           likes_count: number | null
           location: string | null
+          media_type: string | null
+          media_urls: string[] | null
           tags: string[] | null
           title: string
           updated_at: string
@@ -273,6 +275,8 @@ export type Database = {
           image_url?: string | null
           likes_count?: number | null
           location?: string | null
+          media_type?: string | null
+          media_urls?: string[] | null
           tags?: string[] | null
           title: string
           updated_at?: string
@@ -286,6 +290,8 @@ export type Database = {
           image_url?: string | null
           likes_count?: number | null
           location?: string | null
+          media_type?: string | null
+          media_urls?: string[] | null
           tags?: string[] | null
           title?: string
           updated_at?: string
