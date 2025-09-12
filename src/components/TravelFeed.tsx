@@ -103,7 +103,16 @@ const TravelFeed = () => {
               <p className="text-muted-foreground text-base leading-relaxed">{post.content}</p>
             </div>
             
-            {post.image_url && (
+            {/* Display images from media_urls or fallback to image_url */}
+            {(post.media_urls && post.media_urls.length > 0) ? (
+              <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl overflow-hidden shadow-md">
+                <img 
+                  src={post.media_urls[0]} 
+                  alt={post.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            ) : post.image_url && (
               <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl overflow-hidden shadow-md">
                 <img 
                   src={post.image_url} 

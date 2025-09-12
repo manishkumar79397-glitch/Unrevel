@@ -7,7 +7,9 @@ export interface TravelPost {
   user_id: string;
   title: string;
   content: string;
-  image_url: string;
+  image_url?: string; // Keep for backward compatibility
+  media_urls?: string[]; // New field for multiple media
+  media_type?: 'image' | 'video' | 'carousel';
   location: string;
   tags: string[];
   likes_count: number;

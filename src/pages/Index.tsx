@@ -4,9 +4,11 @@ import { Navigation } from "@/components/Navigation";
 import { TravelFeed } from "@/components/TravelFeed";
 import { TravelReels } from "@/components/TravelReels";
 import { UserProfile } from "@/components/UserProfile";
+import { CreatePost } from "@/components/CreatePost";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "@/hooks/use-toast";
 import { 
   MapPin, 
   Compass, 
@@ -188,18 +190,15 @@ const Index = () => {
       case "post":
         return (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Create New Post</h2>
-            <Card className="p-8 text-center min-h-96 flex items-center justify-center">
-              <div className="space-y-4">
-                <Camera className="w-16 h-16 mx-auto text-ocean" />
-                <h3 className="text-xl font-semibold">Share Your Travel Story</h3>
-                <p className="text-muted-foreground">Upload photos and share your amazing adventures</p>
-                <Button variant="hero" size="lg">
-                  <Plane className="w-5 h-5 mr-2" />
-                  Create Post
-                </Button>
-              </div>
-            </Card>
+            <CreatePost 
+              onPostCreated={() => {
+                toast({
+                  title: "Post created successfully!",
+                  description: "Your travel story has been shared with the community.",
+                });
+                setActiveTab('home');
+              }} 
+            />
           </div>
         );
       
