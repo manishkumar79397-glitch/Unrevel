@@ -40,7 +40,7 @@ export function Navigation({ activeTab, onTabChange, notificationCount = 0 }: Na
       <aside className="hidden lg:flex lg:flex-col lg:w-80 lg:fixed lg:left-0 lg:top-0 lg:h-full lg:bg-card/50 lg:backdrop-blur-xl lg:border-r lg:border-border lg:p-8 lg:shadow-lg">
         <div className="mb-12">
           <h1 className="text-3xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-            TravelShare
+            Unravel
           </h1>
           <p className="text-sm text-muted-foreground mt-2">Share your adventures</p>
         </div>
