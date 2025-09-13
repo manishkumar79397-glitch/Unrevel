@@ -13,26 +13,14 @@ const TravelFeed = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const likeMutation = useLikePost();
-  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
 
-  const handleLike = (postId: string) => {
+  const handleLike = (postId: string, currentLikedStatus: boolean) => {
     if (!user) {
       navigate('/auth');
       return;
     }
     
-    const isLiked = likedPosts.has(postId);
-    setLikedPosts(prev => {
-      const newSet = new Set(prev);
-      if (isLiked) {
-        newSet.delete(postId);
-      } else {
-        newSet.add(postId);
-      }
-      return newSet;
-    });
-    
-    likeMutation.mutate({ postId, isLiked });
+    likeMutation.mutate({ postId, isLiked: currentLikedStatus });
   };
 
   if (isLoading) {
@@ -137,11 +125,12 @@ const TravelFeed = () => {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className={`text-muted-foreground hover:text-red-500 ${likedPosts.has(post.id) ? 'text-red-500' : ''} transition-colors`}
-                  onClick={() => handleLike(post.id)}
+                  className={`text-muted-foreground hover:text-red-500 ${post.user_has_liked ? 'text-red-500' : ''} transition-colors`}
+                  onClick={() => handleLike(post.id, post.user_has_liked)}
+                  disabled={likeMutation.isPending}
                 >
-                  <Heart className={`h-5 w-5 mr-2 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
-                  <span className="font-medium">{post.likes_count}</span>
+                  <Heart className={`h-5 w-5 mr-2 ${post.user_has_liked ? 'fill-current' : ''}`} />
+                  <span className="font-medium">{post.likes_count || 0}</span>
                 </Button>
                 <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-ocean transition-colors">
                   <MessageCircle className="h-5 w-5 mr-2" />

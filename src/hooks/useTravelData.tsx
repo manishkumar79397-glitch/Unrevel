@@ -54,8 +54,10 @@ export interface UserProfile {
 }
 
 export const useTravelPosts = () => {
+  const { user } = useAuth();
+  
   return useQuery({
-    queryKey: ["travel-posts"],
+    queryKey: ["travel-posts", user?.id],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("travel_posts")
@@ -65,12 +67,22 @@ export const useTravelPosts = () => {
             username,
             display_name,
             avatar_url
+          ),
+          likes!left(
+            user_id
           )
         `)
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      return data as any;
+      
+      // Add user_has_liked property to each post
+      const postsWithLikes = data?.map(post => ({
+        ...post,
+        user_has_liked: post.likes?.some((like: any) => like.user_id === user?.id) || false
+      })) || [];
+      
+      return postsWithLikes;
     },
   });
 };
@@ -198,8 +210,37 @@ export const useLikePost = () => {
         if (error) throw error;
       }
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["travel-posts"] });
+    onMutate: async ({ postId, isLiked }) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["travel-posts", user?.id] });
+
+      // Snapshot previous value
+      const previousPosts = queryClient.getQueryData(["travel-posts", user?.id]);
+
+      // Optimistically update
+      queryClient.setQueryData(["travel-posts", user?.id], (old: any) => {
+        return old?.map((post: any) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              user_has_liked: !isLiked,
+              likes_count: isLiked ? Math.max(post.likes_count - 1, 0) : post.likes_count + 1
+            };
+          }
+          return post;
+        });
+      });
+
+      return { previousPosts };
+    },
+    onError: (err, variables, context) => {
+      // Rollback on error
+      if (context?.previousPosts) {
+        queryClient.setQueryData(["travel-posts", user?.id], context.previousPosts);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["travel-posts", user?.id] });
     },
   });
 };
