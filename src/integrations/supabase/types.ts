@@ -102,6 +102,211 @@ export type Database = {
           },
         ]
       }
+      guide_availability: {
+        Row: {
+          created_at: string | null
+          date: string
+          guide_id: string
+          id: string
+          is_available: boolean | null
+          time_slots: Json | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          guide_id: string
+          id?: string
+          is_available?: boolean | null
+          time_slots?: Json | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          guide_id?: string
+          id?: string
+          is_available?: boolean | null
+          time_slots?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_availability_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_bookings: {
+        Row: {
+          booking_date: string
+          created_at: string | null
+          duration_hours: number | null
+          end_time: string | null
+          guide_id: string
+          id: string
+          payment_intent_id: string | null
+          payment_status: string | null
+          special_requests: string | null
+          start_time: string | null
+          status: string | null
+          total_amount: number
+          traveler_count: number | null
+          traveler_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          booking_date: string
+          created_at?: string | null
+          duration_hours?: number | null
+          end_time?: string | null
+          guide_id: string
+          id?: string
+          payment_intent_id?: string | null
+          payment_status?: string | null
+          special_requests?: string | null
+          start_time?: string | null
+          status?: string | null
+          total_amount: number
+          traveler_count?: number | null
+          traveler_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          booking_date?: string
+          created_at?: string | null
+          duration_hours?: number | null
+          end_time?: string | null
+          guide_id?: string
+          id?: string
+          payment_intent_id?: string | null
+          payment_status?: string | null
+          special_requests?: string | null
+          start_time?: string | null
+          status?: string | null
+          total_amount?: number
+          traveler_count?: number | null
+          traveler_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_bookings_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guide_reviews: {
+        Row: {
+          booking_id: string
+          created_at: string | null
+          guide_id: string
+          id: string
+          rating: number
+          review_text: string | null
+          traveler_id: string
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string | null
+          guide_id: string
+          id?: string
+          rating: number
+          review_text?: string | null
+          traveler_id: string
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string | null
+          guide_id?: string
+          id?: string
+          rating?: number
+          review_text?: string | null
+          traveler_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "guide_reviews_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: true
+            referencedRelation: "guide_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "guide_reviews_guide_id_fkey"
+            columns: ["guide_id"]
+            isOneToOne: false
+            referencedRelation: "guides"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      guides: {
+        Row: {
+          created_at: string | null
+          daily_rate: number | null
+          description: string | null
+          experience_years: number | null
+          gallery_urls: string[] | null
+          hourly_rate: number | null
+          id: string
+          is_available: boolean | null
+          is_verified: boolean | null
+          languages: string[] | null
+          location: string | null
+          profile_image_url: string | null
+          rating: number | null
+          specialties: string[] | null
+          title: string
+          total_reviews: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          daily_rate?: number | null
+          description?: string | null
+          experience_years?: number | null
+          gallery_urls?: string[] | null
+          hourly_rate?: number | null
+          id?: string
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          title: string
+          total_reviews?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          daily_rate?: number | null
+          description?: string | null
+          experience_years?: number | null
+          gallery_urls?: string[] | null
+          hourly_rate?: number | null
+          id?: string
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          languages?: string[] | null
+          location?: string | null
+          profile_image_url?: string | null
+          rating?: number | null
+          specialties?: string[] | null
+          title?: string
+          total_reviews?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       likes: {
         Row: {
           created_at: string
@@ -284,6 +489,7 @@ export type Database = {
           interests: string[] | null
           location: string | null
           posts_count: number | null
+          role: Database["public"]["Enums"]["user_role"] | null
           updated_at: string
           user_id: string
           username: string | null
@@ -299,6 +505,7 @@ export type Database = {
           interests?: string[] | null
           location?: string | null
           posts_count?: number | null
+          role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string
           user_id: string
           username?: string | null
@@ -314,6 +521,7 @@ export type Database = {
           interests?: string[] | null
           location?: string | null
           posts_count?: number | null
+          role?: Database["public"]["Enums"]["user_role"] | null
           updated_at?: string
           user_id?: string
           username?: string | null
@@ -479,7 +687,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      user_role: "traveler" | "guide" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -606,6 +814,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      user_role: ["traveler", "guide", "admin"],
+    },
   },
 } as const
