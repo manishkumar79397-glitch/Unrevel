@@ -139,7 +139,10 @@ export function CreatePost({ onPostCreated, onCancel }: CreatePostProps) {
       setImages([]);
       setNewTag("");
 
-      onPostCreated?.();
+      // Refetch posts in TravelFeed
+      if (onPostCreated) {
+        onPostCreated();
+      }
     } catch (error) {
       console.error('Error creating post:', error);
       toast({

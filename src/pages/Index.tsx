@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { TravelFeed } from "@/components/TravelFeed";
+import { useTravelPosts } from "@/hooks/useTravelData";
 import { TravelReels } from "@/components/TravelReels";
 import { UserProfile } from "@/components/UserProfile";
 import { CreatePost } from "@/components/CreatePost";
@@ -53,6 +54,7 @@ const Index = () => {
   const [activeTab, setActiveTab] = useState("home");
   const { user, loading, signOut } = useAuth();
   const { data: userProfile } = useUserProfile();
+  const { data: posts = [], refetch } = useTravelPosts();
   const navigate = useNavigate();
 
   // Show loading state
@@ -108,7 +110,7 @@ const Index = () => {
             </div>
 
             {/* Travel Feed */}
-            <TravelFeed />
+            <TravelFeed posts={posts} onShareStory={() => setActiveTab('post')} />
           </div>
         );
       
@@ -196,6 +198,7 @@ const Index = () => {
                   title: "Post created successfully!",
                   description: "Your travel story has been shared with the community.",
                 });
+                refetch();
                 setActiveTab('home');
               }} 
             />

@@ -75,13 +75,17 @@ export const useTravelPosts = () => {
         .order("created_at", { ascending: false });
 
       if (error) throw error;
-      
+
+      console.log("Fetched travel_posts from Supabase:", data);
+
       // Add user_has_liked property to each post
       const postsWithLikes = data?.map(post => ({
         ...post,
         user_has_liked: post.likes?.some((like: any) => like.user_id === user?.id) || false
       })) || [];
-      
+
+      console.log("Posts with likes mapped:", postsWithLikes);
+
       return postsWithLikes;
     },
   });
